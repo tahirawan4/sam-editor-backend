@@ -133,6 +133,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     back_view = serializers.SerializerMethodField()
     left_view = serializers.SerializerMethodField()
     right_view = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
 
     # back_view = serializers.SerializerMethodField()
 
@@ -144,8 +145,12 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductDesign
         # fields = ['id', 'name', 'fabrics', 'front_view', 'left_view', 'right_view', 'back_view']
-        fields = ['id', 'name', 'fabrics', 'component_selected', 'front_view', 'back_view', 'left_view', 'right_view',
+        fields = ['id', 'name', 'category', 'fabrics', 'component_selected', 'front_view', 'back_view', 'left_view',
+                  'right_view',
                   'base_price']
+
+    def get_category(self, obj):
+        return obj.category.key
 
     def get_front_view(self, obj):
         if obj.category.key == 'polo-shirt':
